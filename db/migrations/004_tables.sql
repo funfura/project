@@ -44,12 +44,12 @@ CREATE TABLE floor_equipment (
 );
 
 CREATE TABLE work_types (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    code TEXT PRIMARY KEY,
     system_code TEXT NOT NULL,
-    scope TEXT NOT NULL, -- basement / floor / apartment
-    code TEXT NOT NULL UNIQUE,  -- mgn_cable_riser, usp_power, etc
+    scope TEXT NOT NULL,
     name TEXT NOT NULL
 );
+
 
 CREATE TABLE basement_works (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),

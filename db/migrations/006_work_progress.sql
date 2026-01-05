@@ -1,17 +1,14 @@
--- 006_work_progress.sql
 BEGIN;
 
 -- ======================
 -- Таблица прогресса работ
 -- ======================
 CREATE TABLE IF NOT EXISTS work_progress (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-
-    work_type_id UUID NOT NULL
-        REFERENCES work_types(id)
+    object_id UUID NOT NULL,            -- id дома/подъезда/квартиры
+    work_code TEXT NOT NULL             -- код работы, как в work_types.code
+        REFERENCES work_types(code)
         ON DELETE CASCADE,
-
-    object_id UUID NOT NULL,
+    
     object_type TEXT NOT NULL CHECK (
         object_type IN ('basement', 'floor', 'apartment')
     ),
@@ -23,7 +20,7 @@ CREATE TABLE IF NOT EXISTS work_progress (
     comment TEXT,
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 
-    UNIQUE (work_type_id, object_id)
+    PRIMARY KEY (object_id, work_code)
 );
 
 -- ======================
